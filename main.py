@@ -36,7 +36,26 @@ def get_product_by_id(id: int):
 def add_product(product: Product):
     for product_already in Products:
         if product_already.id == product.id:
-            return {"error": "Need to chnage the id, id alreday present in Db"}
+            return {"error": "Need to change the id, id already present in Db"}
     else:
         Products.append(product)
         return product
+
+@app.put("/product")
+def update_product(id:int ,product :Product):
+    for i in range(len(Products)):
+        if Products[i].id == id:
+            Products[i] = product
+            return {"message": "Product Updated Succesfully"}
+        
+    else:
+        return {"message": f"No such Product with id {id} Exists"}
+
+@app.delete("/product")
+def delete_product(id: int):
+    for i in range(len(Products)):
+        if Products[i].id == id:
+            del Products[i]
+            return {"succes": "Product Deleted Sucessfully"}
+    else:
+        return {"error": f"No Such product with id {id} exists"}
